@@ -13,7 +13,6 @@ import java.util.UUID;
 @Table(name = "wallet")
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class WalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

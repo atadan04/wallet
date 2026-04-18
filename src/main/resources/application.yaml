@@ -1,3 +1,12 @@
 spring:
   application:
     name: wallet
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+      username: postgres
+      password: root
+      url: jdbc:postgresql://localhost:5434/postgres
+      driver-class-name: org.postgresql.Driver
