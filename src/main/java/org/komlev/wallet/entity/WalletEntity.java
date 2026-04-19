@@ -20,4 +20,5 @@ public class WalletEntity {
     private UUID id;
     @Column(name="balance",nullable = false)
     private BigDecimal balance;
+
 }

@@ -1,26 +1,24 @@
 package org.komlev.wallet.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.komlev.wallet.OperationType;
 import org.komlev.wallet.dto.WalletOperationRequestDto;
 import org.komlev.wallet.dto.WalletResponseDto;
+import org.komlev.wallet.mapper.WalletMapper;
 import org.komlev.wallet.repository.WalletRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class WalletService {
     private final WalletRepository walletRepository;
+    private final WalletMapper mapper;
     private static final Logger log = LoggerFactory.getLogger(WalletService.class);
-    @Autowired
-    public WalletService(WalletRepository walletRepository) {
-        this.walletRepository = walletRepository;
-    }
-
     public void transaction(WalletOperationRequestDto walletOperationRequestDto) {
         var temp = walletRepository.findById(walletOperationRequestDto.walletId()).orElseThrow(EntityNotFoundException::new);
         if(walletOperationRequestDto.operationType().equals(OperationType.WITHDRAW)
@@ -38,10 +36,8 @@ public class WalletService {
 
     public WalletResponseDto getWalletById(UUID id) {
         var walletEntity = walletRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Wallet not found by id - " + id));
-        return new WalletResponseDto(
-                id,
-                walletEntity.getBalance()
-        );
+        return mapper.toResponseDto(walletEntity);
+
     }
 }
     

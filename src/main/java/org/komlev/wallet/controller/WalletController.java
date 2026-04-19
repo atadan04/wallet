@@ -1,6 +1,7 @@
 package org.komlev.wallet.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.komlev.wallet.dto.WalletOperationRequestDto;
 import org.komlev.wallet.dto.WalletResponseDto;
 import org.komlev.wallet.service.WalletService;
@@ -13,13 +14,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class WalletController {
     private final WalletService walletService;
-    @Autowired
-    public WalletController(WalletService walletService) {
-        this.walletService = walletService;
-    }
-
     @PostMapping("/wallet")
     public ResponseEntity<Void> transaction(@RequestBody @Valid WalletOperationRequestDto walletRequestDto){
         walletService.transaction(walletRequestDto);
