@@ -3,10 +3,17 @@ spring:
     name: wallet
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
-  datasource:
-      username: postgres
-      password: root
-      url: jdbc:postgresql://localhost:5434/postgres
-      driver-class-name: org.postgresql.Driver
+#  datasource:
+#      username: postgres
+#      password: root
+#      url: jdbc:postgresql://localhost:5432/postgres
+#      driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+logging:
+  level:
+    org.liquibase: DEBUG
+

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: komlev
+      changes:
+        - sql:
+            sql: ALTER TABLE wallet RENAME COLUMN wallet_id TO id;

@@ -16,7 +16,7 @@ import java.util.UUID;
 public class WalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "wallet_id",nullable = false,unique = true)
+    @Column(name = "id",nullable = false,unique = true)
     private UUID id;
     @Column(name="balance",nullable = false)
     private BigDecimal balance;

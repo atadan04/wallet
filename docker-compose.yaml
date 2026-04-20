@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:latest  # Готовый образ из Docker Hub
+    container_name: wallet_db  # Имя контейнера (видно в docker ps)
+    environment: # Переменные окружения для PostgreSQL
+      POSTGRES_DB: postgres      # Имя БД
+      POSTGRES_USER: postgres  # Пользователь
+      POSTGRES_PASSWORD: root  # Пароль
+    ports:
+      - "5432:5432"  # Порт хост:порт контейнера
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+  app:
+    build: .
+    container_name: wallet-app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root

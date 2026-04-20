@@ -20,7 +20,7 @@ public class WalletService {
     private final WalletMapper mapper;
     private static final Logger log = LoggerFactory.getLogger(WalletService.class);
     public void transaction(WalletOperationRequestDto walletOperationRequestDto) {
-        var temp = walletRepository.findById(walletOperationRequestDto.walletId()).orElseThrow(EntityNotFoundException::new);
+        var temp = walletRepository.findById(walletOperationRequestDto.id()).orElseThrow(EntityNotFoundException::new);
         if(walletOperationRequestDto.operationType().equals(OperationType.WITHDRAW)
                 &&temp.getBalance().compareTo(walletOperationRequestDto.amount())<0){
             throw new IllegalArgumentException("The balance is less than the withdrawal amount");
@@ -30,7 +30,7 @@ public class WalletService {
             temp.setBalance(temp.getBalance().add(walletOperationRequestDto.amount()));
         }
 
-        log.info("Transaction successfully! Wallet id - {}",walletOperationRequestDto.walletId());
+        log.info("Transaction successfully! Wallet id - {}",walletOperationRequestDto.id());
         walletRepository.save(temp);
     }
 
