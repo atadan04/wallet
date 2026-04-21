@@ -1,23 +1,41 @@
 services:
   postgres:
-    image: postgres:latest  # Готовый образ из Docker Hub
-    container_name: wallet_db  # Имя контейнера (видно в docker ps)
-    environment: # Переменные окружения для PostgreSQL
-      POSTGRES_DB: postgres      # Имя БД
-      POSTGRES_USER: postgres  # Пользователь
-      POSTGRES_PASSWORD: root  # Пароль
+    image: postgres:latest
+    container_name: wallet_db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
     ports:
-      - "5432:5432"  # Порт хост:порт контейнера
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
+      - "5432:5432"
+    networks:
+      - wallet_net
+
   app:
-    build: .
+    build: ../wallet1
     container_name: wallet-app
     depends_on:
       - postgres
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+    networks:
+      - wallet_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    networks:
+      - wallet_net
+
+networks:
+  wallet_net:
+    driver: bridge
