@@ -1,7 +1,7 @@
 databaseChangeLog:
   - include:
-      file: versions/v1_create_wallet_table.yaml
+      file: versions/1_create_wallet_table.yaml
       relativeToChangelogFile: true
   - include:
-      file: versions/v2_rename_column.yaml
+      file: versions/2_rename_column.yaml
       relativeToChangelogFile: true

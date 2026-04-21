@@ -2,7 +2,7 @@ package org.komlev.wallet.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import org.komlev.wallet.OperationType;
+import org.komlev.wallet.enums.OperationType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
