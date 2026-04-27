@@ -12,7 +12,7 @@ services:
       - wallet_net
 
   app:
-    build: ../wallet1
+    build: ../wallet
     container_name: wallet-app
     depends_on:
       - postgres

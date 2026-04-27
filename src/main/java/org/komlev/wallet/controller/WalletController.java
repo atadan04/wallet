@@ -19,9 +19,8 @@ public class WalletController {
     private final WalletService walletService;
 
     @PostMapping("/wallet")
-    public ResponseEntity<Void> transaction(@RequestBody @Valid WalletOperationRequestDto walletRequestDto) {
-        walletService.transaction(walletRequestDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<WalletResponseDto> transaction(@RequestBody @Valid WalletOperationRequestDto walletRequestDto) {
+        return ResponseEntity.ok(walletService.transaction(walletRequestDto));
     }
 
     @GetMapping("/wallets/{id}")

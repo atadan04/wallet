@@ -21,7 +21,7 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final WalletMapper mapper;
 
-    public void transaction(WalletOperationRequestDto walletOperationRequestDto) {
+    public WalletResponseDto transaction(WalletOperationRequestDto walletOperationRequestDto) {
         var wallet = walletRepository.findById(walletOperationRequestDto.id())
                 .orElseThrow(EntityNotFoundException::new);
         if (walletOperationRequestDto.operationType().equals(OperationType.WITHDRAW)
@@ -35,6 +35,7 @@ public class WalletService {
 
         log.info("Transaction successfully! Wallet id - {}", walletOperationRequestDto.id());
         walletRepository.save(wallet);
+       return mapper.toResponseDto(wallet);
     }
 
     public WalletResponseDto getWalletById(UUID id) {

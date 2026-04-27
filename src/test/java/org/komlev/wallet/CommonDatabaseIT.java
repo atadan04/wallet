@@ -8,6 +8,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public abstract class CommonDatabaseIT {
 
     @ServiceConnection
@@ -18,7 +19,7 @@ public abstract class CommonDatabaseIT {
             .withReuse(false);
 
     static {
-        DB_INSTANCE.setPortBindings(List.of("5433:5432"));
+//        DB_INSTANCE.setPortBindings(List.of("5433:5432"));
         DB_INSTANCE.start();
     }
 }

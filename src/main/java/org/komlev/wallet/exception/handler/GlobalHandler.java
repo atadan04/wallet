@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -52,6 +53,16 @@ public class GlobalHandler {
                 .body(new ErrorResponseDto(
                         e.getMessage(),
                         "Incorrect request format",
+                        LocalDateTime.now()
+                ));
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponseDto> methodArgumentNotValidExceptionHandling(MethodArgumentNotValidException e){
+        log.error("Argument not valid exception Handling: " + e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDto(
+                        e.getMessage(),
+                        "Not Valid argument",
                         LocalDateTime.now()
                 ));
     }
